@@ -1,9 +1,69 @@
 <section class="border-t mt-5 pt-2 border-t-indigo-500 w-full">
-  <h2>Selectors</h2>
+  <h2 class="text-4xl">Selectors</h2>
 
-  <div>
-    <form >
+  <div class="my-10 border-b py-6">
+    <form [formGroup]="myForm">
+      <!-- Región -->
+      <div class="w-full h-auto grid place-items-center grid-cols-2">
+        <label class="text-2xl text-green-400 font-bold ">Continent</label>
+        <select formControlName="region" class="w-full bg-transparent border rounded p-1 ">
+          <option value="" selected class="text-center text-green-800"> -- Select a continent -- </option>
+          <option
+            class="text-center text-green-800"
+            *ngFor="let region of regions"
+            [value]="region"
+          >
+            {{ region }}
+          </option>
+        </select>
+      </div>
+
+        <!-- Countries -->
+        <div class="w-full h-auto grid place-items-center grid-cols-2 mt-5"
+          *ngIf="countriesByRegion.length > 0 ">
+          <label class="text-2xl text-green-400 font-bold">Country</label>
+          <select formControlName="country" class="w-full bg-transparent border rounded p-1 ">
+            <option value="" selected class="text-center text-green-800"> -- Select a country -- </option>
+            <option class="text-center text-green-800" *ngFor="let country of countriesByRegion"  [value]="country.name">
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Borders  -->
+        <div
+          class="w-full h-auto grid place-items-center grid-cols-2 mt-5"
+          *ngIf="borders.length > 0"
+        >
+          <label class="text-2xl text-green-400 font-bold">Borders</label>
+          <select formControlName="border" class="w-full bg-transparent border rounded p-1 ">
+            <option value="" selected class="text-center text-green-800"> -- Select the Border -- </option>
+            <option class="text-center text-green-800" *ngFor="let country of borders" [value]="country.cca3">
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
 
     </form>
+    <!-- Spinner -->
+    <div
+      *ngIf="spinnerShow"
+      class="col-span-2 w-full h-auto mt-20 grid place-items-center">
+      <div
+        class="inline-block  h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+        role="status">
+        <span
+          class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+      </div>
+    </div>
   </div>
+
+
+  <h3 class="mb-2 text-4xl text-green-400">Form</h3>
+  <code>
+    {{ myForm.value | json }}
+  </code>
+  <p class="my-2">
+    is form valid: <span class="text-green-400 text-2xl capitalize">{{ myForm.valid }}</span>
+  </p>
 </section>
